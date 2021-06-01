@@ -1,0 +1,78 @@
+﻿@page "/Addcustomer"
+@using Test.Shared
+@inject HttpClient Http
+ 
+
+<div> hello</div>
+
+
+
+ 
+
+@code {
+
+    public CustomerModel User { get; set; }
+
+
+
+    //Employee obj = new Employee();
+    protected async void CreateEmployee()
+    {
+        //await employeeService.InsertEmployeeAsync(User);
+        //NavigationManager.NavigateTo("Employees");
+
+        var result = await Http.PostAsJsonAsync("api/Values/AddCustomer", User);
+        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            //UserList.Clear();
+            //refreshObjects();
+            //UserList = await GetUsers();
+            //showAddUserModal();
+        }
+
+    }
+    void Cancel()
+    {
+        //NavigationManager.NavigateTo("Employees");
+    }
+
+    public async Task AddUser()
+    {
+        try
+        {
+            var result = await Http.PostAsJsonAsync("api/Values/AddCustomer", User);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                //UserList.Clear();
+                //refreshObjects();
+                //UserList = await GetUsers();
+                //showAddUserModal();
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+
+    }
+
+
+    async Task UpdateUser()
+    {
+        try
+        {
+            var result = await Http.PostAsJsonAsync("api/auth/UpdateUser", User);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                //UserList.Clear();
+                //refreshObjects();
+                //editUserModal();
+                //UserList = await GetUsers();
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+}
