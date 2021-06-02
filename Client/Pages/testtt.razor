@@ -1,0 +1,452 @@
+﻿ 
+@page "/testtt"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager;
+@inject IJSRuntime JSRuntime
+ 
+<!--begin::Subheader
+<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        begin::Details
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            begin::Title
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">User Management</h5>
+            end::Title
+            begin::Separator
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+            end::Separator
+        </div>
+        <div class="card-toolbar">
+            <div class="dropdown dropdown-inline mr-2">
+            </div>
+            <a @onclick="() => showAddUserModal()" class="btn btn-primary font-weight-bolder">
+                <span class="svg-icon svg-icon-md">
+                    <i class="icon-xl la la-plus"></i>
+                </span>New User
+            </a>
+        </div>
+        end::Details
+    </div>
+</div>
+
+end::Subheader
+
+<div class="d-flex flex-column-fluid">
+    <div class="container-fluid">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <a @onclick="() => DownloadTable()" style=" color: #FFFFFF; width:15em; margin-bottom:2em;" target="_top" class="btn btn-primary font-weight-bolder ml-5">
+                        <span class="svg-icon svg-icon-md">
+                            <i class="icon-lg la la-download"></i>
+                        </span>Download Files
+                    </a>
+                @if (UserList != null && UserList.Count != 0)
+                {
+                    <div id="customers" class="table-responsive m-2">
+                        <table id="tab_customers" class="table table-separate table-head-custom table-checkable text-center">
+                            <thead>
+                                <tr class="text-dark" style="background-color: #2DCE98;">
+                                    <td class="text-white">Role</td>
+                                    <td class="text-white">Name</td>
+                                    <td class="text-white">Region</td>
+                                    <td class="text-white">Branch</td>
+                                    <td class="text-white">Email</td>
+                                    <td class="text-white">Actions</td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in UserList)
+                                {
+                                    <tr>
+                                        <td style="padding-top:2%;">@user.Role</td>
+                                        <td style="padding-top:2%;">@user.Name</td>
+                                        <td style="padding-top:2%;">@user.Region</td>
+                                        <td style="padding-top:2%;">@user.Branch</td>
+                                        <td style="padding-top:2%;">@user.Email</td>
+                                        <td style="padding-top:2%;">
+                                            <a @onclick="() => EditDetails(user)" title="Edit Details" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                                                <span class="svg-icon svg-icon-md svg-icon-primary">
+                                                    <i class="icon-xl la la-edit"></i>
+                                                </span>
+                                            </a>
+                                            <a @onclick="() => ConfirmBtn(user.Id, user.UserName)" title="Delete" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                                                <span class="svg-icon svg-icon-md svg-icon-primary">
+                                                    <i class="icon-xl la la-trash"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (showAddUser)
+{
+    <div id="kt_quick_cart" class="offcanvas offcanvas-right p-10 offcanvas-on">-->
+        begin::Header
+        <div class="offcanvas-header d-flex align-items-center justify-content-between pb-7" kt-hidden-height="46" style="">
+            <h4 class="font-weight-bold m-0">@content</h4>
+            <a @onclick="() => cancelModal()" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_cart_close">
+                <i class="ki ki-close icon-xs text-muted"></i>
+            </a>
+        </div>
+        end::Header
+        begin::Content
+        <div class="offcanvas-content pr-5 mr-n5 scroll ps ps--active-y">
+            begin::Item
+            <div class="d-flex align-items-center justify-content-between py-4">
+                @if (editUser)
+                {
+                    <EditForm Model="User" OnValidSubmit="UpdateUser">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.Name" Placeholder="Enter Name" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.Name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Username:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.UserName" Placeholder="Enter Username" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.UserName" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.Email" Placeholder="Enter Email" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.Email" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone Number:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.PhoneNumber" Placeholder="Enter Phone Number" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.PhoneNumber" />
+                        </div>
+                        <div class="form-group">
+                            <label>New Password:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.Password" Placeholder="Enter New Password" class="form-control"></SfTextBox>
+                        </div>
+                        @if (!CurrentUser.IsInRole("RCO"))
+                        {
+                            <div class="form-group">
+                                <label>Region:</label>
+                                <SfDropDownList TValue="string" TItem="string" @bind-Value="User.Region" Placeholder="Select a region" AllowFiltering="true" DataSource="@regionList">
+                                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                                    <DropDownListEvents TValue="string" ValueChange=" OnRegionChange"></DropDownListEvents>
+                                </SfDropDownList>
+                                <ValidationMessage For="() => User.Region" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>User Role:</label>
+                                <SfDropDownList TValue="string" TItem="string" @bind-Value="User.Role" Placeholder="Select a role" AllowFiltering="true" DataSource="@Roles">
+                                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                                    <DropDownListEvents TValue="string" ValueChange=" OnRoleChange"></DropDownListEvents>
+                                </SfDropDownList>
+                                <ValidationMessage For="() => User.Role" />
+                            </div>
+
+                        }
+
+                        @if (CurrentUser.IsInRole("SA") && (User.Role == "ACO" || User.Role == "RCO"))
+                        {
+                            <div class="form-group">
+                                <label>Device IMEI:</label>
+                                <SfTextBox Type="InputType.Number" @bind-Value="User.DeviceImei" Placeholder="Enter device IMEI for attendance" class="form-control"></SfTextBox>
+                                <ValidationMessage For="() => User.DeviceImei" />
+                            </div>
+                        }
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="reset" class="btn btn-secondary" @onclick="() => cancelModal()">Cancel</button> Button trigger modal
+                    </EditForm>
+                }
+                else
+                {
+                    <EditForm Model="User" OnValidSubmit="AddUser">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.Name" Placeholder="Enter Name" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.Name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Username:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.UserName" Placeholder="Enter Username" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.UserName" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.Email" Placeholder="Enter Email" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.Email" />
+                        </div>
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.Password" Placeholder="Enter Password" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.Password" />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Phone Number:</label>
+                            <SfTextBox Type="InputType.Text" @bind-Value="User.PhoneNumber" Placeholder="Enter Phone Number" class="form-control"></SfTextBox>
+                            <ValidationMessage For="() => User.PhoneNumber" />
+                        </div>
+                        @if (!CurrentUser.IsInRole("RCO"))
+                        {
+                            <div class="form-group">
+                                <label>Region:</label>
+                                <SfDropDownList TValue="string" TItem="string" @bind-Value="User.Region" Placeholder="Select a region" AllowFiltering="true" DataSource="@regionList">
+                                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                                    <DropDownListEvents TValue="string" ValueChange=" OnRegionChange"></DropDownListEvents>
+                                </SfDropDownList>
+                                <ValidationMessage For="() => User.Region" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>User Role:</label>
+                                <SfDropDownList TValue="string" TItem="string" @bind-Value="User.Role" Placeholder="Select a role" AllowFiltering="true" DataSource="@Roles">
+                                    <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                                    <DropDownListEvents TValue="string" ValueChange=" OnRoleChange"></DropDownListEvents>
+                                </SfDropDownList>
+                                <ValidationMessage For="() => User.Role" />
+                            </div>
+                        }
+                        @if (CurrentUser.IsInRole("SA") && (User.Role == "ACO" || User.Role == "RCO"))
+                        {
+                            <div class="form-group">
+                                <label>Device IMEI:</label>
+                                <SfTextBox Type="InputType.Number" @bind-Value="User.DeviceImei" Placeholder="Enter device IMEI for attendance" class="form-control"></SfTextBox>
+                                <ValidationMessage For="() => User.DeviceImei" />
+                            </div>
+                        }
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="reset" class="btn btn-secondary" @onclick="() => cancelModal()">Cancel</button> Button trigger modal
+                    </EditForm>
+                }
+            </div>
+            end::Content
+        </div>
+    </div>
+}
+
+<SfDialog @bind-Visible="@ConfirmDlgVisible" Width="400px" Target="#target" ShowCloseIcon="true">
+    <DialogTemplates>
+        <Header>
+            Delete User
+        </Header>
+        <Content>@content</Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="Yes" IsPrimary="true" OnClick="@DeleteUser" />
+        <DialogButton Content="No" OnClick="@HideDialog" />
+    </DialogButtons>
+</SfDialog>
+
+
+@code {
+
+    public ClaimsPrincipal CurrentUser { get; set; }
+    ApiRequest apiRequest;
+
+    bool showAddUser = false;
+    bool editUser = false;
+    string content;
+
+
+    private string UserToBeDeletedId;
+    private bool ConfirmDlgVisible { get; set; } = false;
+
+    public List<User> UserList { get; set; }
+    public User User { get; set; }
+    public List<string> Roles { get; set; }
+    List<string> regionList = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentUser = (await authStateProvider.GetAuthenticationStateAsync()).User;
+        UserList = await GetUsers();
+        regionList = await GetRegions();
+        Roles = await GetRoles();
+        Roles.Remove("EM");
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public async Task<List<string>> GetRoles()
+    {
+        var getPartyRolesResponse = await Http.GetAsync("api/auth/GetUserRoles");
+        return JsonConvert.DeserializeObject<List<string>>(await getPartyRolesResponse.Content.ReadAsStringAsync());
+    }
+
+    public async Task DownloadTable()
+    {
+        await JSRuntime.InvokeVoidAsync("demoFromHTML", 12);
+    }
+
+    public async Task<List<User>> GetUsers()
+    {
+        var getUsersResponse = await Http.GetAsync("api/auth/GetUsers");
+        return JsonConvert.DeserializeObject<List<User>>(await getUsersResponse.Content.ReadAsStringAsync());
+    }
+
+    public async Task AddUser()
+    {
+        try
+        {
+            var result = await Http.PostAsJsonAsync("api/auth/AddUser", User);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                UserList.Clear();
+                refreshObjects();
+                UserList = await GetUsers();
+                showAddUserModal();
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+
+    }
+
+    public void EditDetails(User user)
+    {
+        editUserModal();
+        this.User = user;
+
+    }
+
+    async Task UpdateUser()
+    {
+        try
+        {
+            var result = await Http.PostAsJsonAsync("api/auth/UpdateUser", User);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                UserList.Clear();
+                refreshObjects();
+                editUserModal();
+                UserList = await GetUsers();
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+    public void ConfirmBtn(string id, string name)
+    {
+        UserToBeDeletedId = id;
+        content = "Are you sure you want to permanently delete \"" + name + "\" ?";
+
+        this.ConfirmDlgVisible = true;
+    }
+    public void HideDialog(Object e)
+    {
+        this.ConfirmDlgVisible = false;
+    }
+
+    async Task DeleteUser()
+    {
+        try
+        {
+            UserList.Clear();
+            apiRequest = new ApiRequest() { Id = new Guid(UserToBeDeletedId) };
+            this.ConfirmDlgVisible = false;
+            await Http.PostAsJsonAsync("api/auth/DeleteUser", apiRequest);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+        UserList = await GetUsers();
+        refreshObjects();
+    }
+
+    void cancelModal()
+    {
+        editUser = false;
+        showAddUser = false;
+        content = "Add User";
+    }
+    void editUserModal()
+    {
+        editUser = !editUser;
+        showAddUserModal();
+    }
+    void showAddUserModal()
+    {
+        if (editUser)
+        {
+            content = "Edit User";
+        }
+        else
+        {
+            content = "Add User";
+        }
+
+        User = new User();
+        showAddUser = !showAddUser;
+    }
+
+    private void OnRoleChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    {
+        User.Role = args.Value;
+    }
+
+    public async Task<List<string>> GetRegions()
+    {
+        var result = await Http.GetAsync("api/region/getregions");
+        if (result.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            return JsonConvert.DeserializeObject<List<string>>(await result.Content.ReadAsStringAsync());
+        }
+        else
+        {
+            return new List<string>();
+        }
+    }
+    private async void OnRegionChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    {
+        User.Region = args.Value;
+        User.Branch = null;
+        User.Role = null;
+        if (User.Region == "Central")
+        {
+            Roles.Clear();
+            Roles.Add("CDNS");
+            Roles.Add("ACO");
+            StateHasChanged();
+        }
+        else
+        {
+            Roles.Clear();
+            Roles = await GetRoles();
+            Roles.Remove("CDNS");
+            Roles.Remove("ACO");
+            StateHasChanged();
+        }
+
+    }
+
+
+    public async void refreshObjects()
+    {
+        UserToBeDeletedId = null;
+        apiRequest = new ApiRequest();
+        User = new User();
+        User = null;
+        regionList = await GetRegions();
+        Roles = await GetRoles();
+    }
+}

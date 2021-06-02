@@ -1,0 +1,91 @@
+﻿@page "/Customerr"
+@using Test.Shared
+@inject HttpClient Http
+@*<h3>Customerr</h3>*@
+
+
+@if (AccidentsList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered border-primary table-responsive-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile No</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in AccidentsList)
+            {
+                <tr>
+                    <td>@forecast.Id         </td>
+                    <td>@forecast.Name       </td>
+                    <td>@forecast.Email     </td>
+                    <td>@forecast.MobileNo  </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+
+
+    
+    <div class="row">
+        @foreach (var forecast in AccidentsList)
+        {
+        <div class="col-lg-3">
+            <div class="card shadow" style="width: 18rem;">
+                <ul class="list-group list-group-flush ">
+                    <li class="list-group-item">@forecast.Id      </li>
+                    <li class="list-group-item">@forecast.Name    </li>
+                    <li class="list-group-item">@forecast.Email   </li>
+                    <li class="list-group-item">@forecast.MobileNo</li>
+                </ul>
+
+            </div>
+        </div>
+
+                }
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+        @code {
+
+
+    public List<CustomerModel> AccidentsList { get; set; }
+
+
+
+
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+            AccidentsList = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x=>x.Id).ToList();
+            //.OrderByDescending(x => x.LastUpdated)
+        }
+
+        }

@@ -1,0 +1,510 @@
+﻿@page "/Addcustomer"
+@using Test.Shared
+@inject IJSRuntime JSRuntime
+@inject HttpClient Http
+@inject NavigationManager NavigationManager;
+@if (message == "" && message == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+
+    @*<div class="container">
+
+
+            <div class="toast" data-autohide="false" style="position: absolute; top: 50px; right: 5px;">
+                <div class="toast-header">
+                    <strong class="mr-auto text-primary">Toast Header</strong>
+                    <small class="text-muted">5 mins ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                </div>
+                <div class="toast-body">
+                    @message
+                </div>
+            </div>
+        </div>*@
+    <div class="container mt-3">
+
+
+
+        <div class="toast mt-3 bg-dark" style="position: absolute; top: 40px; right: 5px;">
+            <div class="toast-header text-light bg-primary">
+                Toast Header
+            </div>
+            <div class="toast-body text-light">
+                @message
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+<div class="card-toolbar">
+    <div class="dropdown dropdown-inline mr-2">
+    </div>
+    <a @onclick="() => showAddUserModal()" class="btn btn-primary font-weight-bolder">
+        <span class="svg-icon svg-icon-md">
+            <i class="icon-xl la la-plus"></i>
+        </span>New User
+    </a>
+</div>
+@if (showAddUser)
+{
+    <div> <h4 class="font-weight-bold m-0">@content</h4></div>
+    @if (editUser)
+    {
+
+        <EditForm Model="User" OnValidSubmit="UpdateUser">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Name:</label>
+
+                <input Type="Text" @bind="User.Name" Placeholder="Enter Name" class="form-control" />
+                <ValidationMessage For="() => User.Name" />
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input Type="Text" @bind="User.Email" Placeholder="Enter Email" class="form-control" />
+                <ValidationMessage For="() => User.Email" />
+            </div>
+            <div class="form-group">
+                <label>MobileNo:</label>
+                <input Type="Text" @bind="User.MobileNo" Placeholder="Enter MobileNo" class="form-control" />
+                <ValidationMessage For="() => User.MobileNo" />
+            </div>
+            <div class="form-group">
+                <label>Cnic:</label>
+                <input Type="Text" @bind="User.Cnic" Placeholder="Enter Cnic" class="form-control" />
+                <ValidationMessage For="() => User.Cnic" />
+            </div>
+
+
+
+
+            <button type="submit" class="btn btn-primary mr-2">update</button>
+            @*<button type="reset" class="btn btn-secondary" @onclick="() => cancelModal()">Cancel</button>*@<!-- Button trigger modal-->
+        </EditForm>
+    }
+    else
+    {
+
+        <EditForm Model="User" OnValidSubmit="AddUser">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Name:</label>
+                <SfTextBox Type="InputType.Text" @bind-Value="User.Name" Placeholder="Enter Name" class="form-control"></SfTextBox>
+                <ValidationMessage For="() => User.Name" />
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <SfTextBox Type="InputType.Text" @bind-Value="User.Email" Placeholder="Enter Username" class="form-control"></SfTextBox>
+                <ValidationMessage For="() => User.Email" />
+            </div>
+
+            <div class="form-group">
+                <label>MobileNo:</label>
+                <SfTextBox Type="InputType.Text" @bind-Value="User.MobileNo" Placeholder="Enter Username" class="form-control"></SfTextBox>
+                <ValidationMessage For="() => User.MobileNo" />
+            </div>
+
+            <div class="form-group">
+                <label>Cnic:</label>
+                <SfNumericTextBox TValue="int" @bind-Value="User.Cnic" Placeholder="Enter Username" class="form-control"></SfNumericTextBox>
+                <ValidationMessage For="() => User.Cnic" />
+            </div>
+
+
+            <div class="mr-2" style="width:100%">
+                <div class="control-wrapper">
+                    <SfDropDownList TItem="SelectListItem" TValue="int" Placeholder="Select a City" @bind-Value="User.CusInfoId" AllowFiltering="true"
+                                    DataSource="@vehiclesList">
+                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </EditForm>
+
+
+
+        <!--<EditForm Model="User" OnValidSubmit="AddUser">
+            <DataAnnotationsValidator />
+
+
+            <div class="form-group">
+                <label>Name:</label>
+
+                <input Type="Text" @bind="User.Name" Placeholder="Enter Name" class="form-control" />
+                <ValidationMessage For="() => User.Name" />
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input Type="Text" @bind="User.Email" Placeholder="Enter Email" class="form-control" />
+                <ValidationMessage For="() => User.Email" />
+            </div>
+            <div class="form-group">
+                <label>MobileNo:</label>
+                <input Type="Text" @bind="User.MobileNo" Placeholder="Enter MobileNo" class="form-control" />
+                <ValidationMessage For="() => User.MobileNo" />
+            </div>
+            <div class="form-group">
+                <label>Cnic:</label>
+                <input Type="Text" @bind="User.Cnic" Placeholder="Enter Cnic" class="form-control" />
+                <ValidationMessage For="() => User.Cnic" />
+            </div>
+
+
+
+
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>-->
+        @*<button type="reset" class="btn btn-secondary" @onclick="() => cancelModal()">Cancel</button>*@<!-- Button trigger modal-->
+        <!--</EditForm>-->
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<EditForm Model="User" OnValidSubmit="AddUser">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row">
+
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-12 col-xl-2">
+                <label>Name:</label>
+                <input Type="Text" @bind="User.Name" Placeholder="Enter Name" class="form-control" />
+                <ValidationMessage For="() => User.Name" />
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12 col-xl-2">
+                <label>Username:</label>
+                <input Type="Text" @bind="User.Email" Placeholder="Enter Email" class="form-control" />
+                <ValidationMessage For="() => User.Email" />
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12 col-xl-2">
+                <label>Email:</label>
+                <input Type="Text" @bind="User.MobileNo" Placeholder="Enter MobileNo" class="form-control" />
+                <ValidationMessage For="() => User.MobileNo" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-12 col-xl-2">
+                <label>Email:</label>
+                <input Type="Text" @bind="User.Cnic" Placeholder="Enter Cnic" class="form-control" />
+                <ValidationMessage For="() => User.Cnic" />
+            </div>
+
+
+        </div>
+        <div>
+
+            <button type="submit" class="btn btn-primary mr-2  ">Submit</button>
+        </div>
+    </div>-->
+@*<button type="reset" class="btn btn-secondary" @onclick="() => cancelModal()">Cancel</button>*@<!-- Button trigger modal-->
+<!--</EditForm>-->
+@*<a @onclick="() => ConfirmBtn(User.Id, User.Name)" title="Delete" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+        <span class="svg-icon svg-icon-md svg-icon-primary">
+            <i class="icon-xl la la-trash"></i>
+        </span>
+    </a>*@
+
+
+
+
+@*<SfDialog @bind-Visible="@ConfirmDlgVisible" Width="400px" Target="#target" ShowCloseIcon="true">
+        <DialogTemplates>
+            <Header>
+                Delete User
+            </Header>
+            <Content>@content</Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton Content="Yes" IsPrimary="true" OnClick="@DeleteUser" />
+            <DialogButton Content="No" OnClick="@HideDialog" />
+        </DialogButtons>
+    </SfDialog>*@
+
+
+
+
+
+
+
+
+
+
+
+
+@if (AccidentsList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered border-primary table-responsive-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile No</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in AccidentsList)
+            {
+                <tr>
+                    <td>@forecast.Id         </td>
+                    <td>@forecast.Name       </td>
+                    <td>@forecast.Email     </td>
+                    <td>@forecast.MobileNo  </td>
+                    <td>
+
+
+                        <a @onclick="() => EditDetails(forecast)" title="Edit Details" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                            <span class="svg-icon svg-icon-md svg-icon-primary">
+                                Edit
+                                <i class="fas fa-edit"></i>
+                            </span>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code {
+    string message { get; set; }
+
+    private bool ConfirmDlgVisible { get; set; } = false;
+
+    bool showAddUser = false;
+    bool editUser = false;
+    string content;
+    private string UserToBeDeletedId;
+
+    CustomerModel User = new CustomerModel();
+    public List<CustomerinformationModel> ComplaintsList { get; set; }
+
+    public List<SelectListItem> vehiclesList { get; set; } = new List<SelectListItem>();
+
+
+
+    public List<CustomerModel> AccidentsList { get; set; }
+
+
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        AccidentsList = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x => x.Id).ToList();
+        //.OrderByDescending(x => x.LastUpdated)
+    }
+
+
+
+    public async Task ListofCustomers()
+    {
+        AccidentsList = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x => x.Id).ToList();
+        ComplaintsList = (await Http.GetFromJsonAsync<List<CustomerinformationModel>>("api/Values/GetAllCustomer")).OrderBy(x => x.CusInfoId).ToList();
+    }
+
+    public async Task DropdownListData()
+    {
+
+        ComplaintsList = (await Http.GetFromJsonAsync<List<CustomerinformationModel>>("api/Values/DropdownListFill")).OrderBy(x => x.CusInfoId).ToList();
+
+        // vehiclesList = ComplaintsList.GroupBy(x => x.VehicleNumber).Select(x => new SelectListItem() { Text = x.Key, Value = x.Key }).ToList();
+
+        vehiclesList = ComplaintsList.Select(x => new SelectListItem() { Text = x.City, Value = x.CusInfoId.ToString() }).ToList();
+    }
+
+
+
+
+    public async Task AddUser()
+    {
+        try
+        {
+            var result = await Http.PostAsJsonAsync("api/Values/AddCustomer", User);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                this.message = "Data save successfully";
+
+                await JSRuntime.InvokeVoidAsync("toastfun");
+
+                await ListofCustomers();
+                User = new CustomerModel();
+                //refreshObjects();
+                //UserList = await GetUsers();
+                //showAddUserModal();
+            }
+        }
+        catch (Exception)
+        {
+            this.message = "Data not save successfully";
+        }
+
+    }
+    public void EditDetails(CustomerModel user)
+    {
+        editUserModal();
+        this.User = user;
+    }
+
+    async Task UpdateUser()
+    {
+        try
+        {
+            var result = await Http.PostAsJsonAsync("api/Values/UpdateCustomerAsync", User);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                //UserList.Clear();
+                //refreshObjects();
+                //editUserModal();
+                //UserList = await GetUsers();
+                //await ListofCustomers();
+                //User = new CustomerModel();
+                this.message = "Data Updated successfully";
+            }
+        }
+        catch (Exception)
+        {
+            this.message = "Data not Updated successfully";
+        }
+    }
+
+    void cancelModal()
+    {
+        editUser = false;
+        showAddUser = false;
+        content = "Add User";
+    }
+    void editUserModal()
+    {
+        editUser = !editUser;
+        showAddUserModal();
+    }
+    void showAddUserModal()
+    {
+
+
+        DropdownListData();
+
+
+        if (editUser)
+        {
+            content = "Edit User";
+        }
+        else
+        {
+            content = "Add User";
+        }
+
+        User = new CustomerModel();
+        showAddUser = !showAddUser;
+    }
+
+
+
+
+
+
+
+    //public void ConfirmBtn(string id, string name)
+    //{
+    //    UserToBeDeletedId = id;
+    //    content = "Are you sure you want to permanently delete \"" + name + "\" ?";
+
+    //    this.ConfirmDlgVisible = true;
+    //}
+    //public void HideDialog(Object e)
+    //{
+    //    this.ConfirmDlgVisible = false;
+    //}
+
+    //async Task DeleteUser()
+    //{
+    //    //try
+    //    //{
+    //    //    UserList.Clear();
+    //    //    apiRequest = new ApiRequest() { Id = new Guid(UserToBeDeletedId) };
+    //    //    this.ConfirmDlgVisible = false;
+    //    //    await Http.PostAsJsonAsync("api/auth/DeleteUser", apiRequest);
+    //    //}
+    //    //catch (Exception ex)
+    //    //{
+    //    //    throw;
+    //    //}
+    //    //UserList = await GetUsers();
+    //    //refreshObjects();
+    //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
