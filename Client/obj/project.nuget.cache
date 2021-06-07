@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7ndk4Buaq3Y/CrkygRLBDYJCLVbO1ni5Nxfp8cbfNtGg1x6lpvp/ornECH6yiF55PPDl9aPil2kSHfIZVeaxmQ==",
+  "dgSpecHash": "X9OgW8G1auZChL6fK0qRXT/oiWW2jbWHcgS2y2LpkNileycavDOk8lhcF57cXPAWsYwe9xfmWF8tcAU6RF/D7A==",
   "success": true,
   "projectFilePath": "C:\\Users\\BA Tech\\source\\repos\\Test\\Client\\Test.Client.csproj",
   "expectedPackageFiles": [
@@ -90,7 +90,7 @@
     "C:\\Users\\BA Tech\\.nuget\\packages\\runtime.win7-x86.runtime.native.system.data.sqlclient.sni\\4.3.0\\runtime.win7-x86.runtime.native.system.data.sqlclient.sni.4.3.0.nupkg.sha512",
     "C:\\Users\\BA Tech\\.nuget\\packages\\syncfusion.blazor\\18.2.0.57\\syncfusion.blazor.18.2.0.57.nupkg.sha512",
     "C:\\Users\\BA Tech\\.nuget\\packages\\syncfusion.excelexport.net.core\\18.2.0.57\\syncfusion.excelexport.net.core.18.2.0.57.nupkg.sha512",
-    "C:\\Users\\BA Tech\\.nuget\\packages\\syncfusion.licensing\\19.1.0.66\\syncfusion.licensing.19.1.0.66.nupkg.sha512",
+    "C:\\Users\\BA Tech\\.nuget\\packages\\syncfusion.licensing\\18.2.0.57\\syncfusion.licensing.18.2.0.57.nupkg.sha512",
     "C:\\Users\\BA Tech\\.nuget\\packages\\syncfusion.pdfexport.net.core\\18.2.0.57\\syncfusion.pdfexport.net.core.18.2.0.57.nupkg.sha512",
     "C:\\Users\\BA Tech\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\BA Tech\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

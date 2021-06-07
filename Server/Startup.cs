@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using Test.Server.Models;
+using Syncfusion.Blazor;
 
 namespace Test.Server
 {
@@ -38,6 +39,7 @@ namespace Test.Server
             //
            // services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddRazorPages();
+           // services.AddSyncfusionBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -516,7 +516,6 @@ C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\+BD6+3L9.gz
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\6UkGe4Mo.gz
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\RPBMZUE5.gz
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\fRU0Dd0k.gz
-C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\G+RZs85f.gz
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\jbTzb6Lt.gz
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\yDx5MdZ1.gz
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\WHhUinjI.gz
@@ -705,3 +704,4 @@ C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\ref\Test.Client.dll
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\Test.Client.pdb
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\serviceworkers\wwwroot\service-worker.js
 C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\service-worker-assets.js
+C:\Users\BA Tech\source\repos\Test\Client\obj\Debug\net5.0\build-gz\qgzW5QLX.gz

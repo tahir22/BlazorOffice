@@ -77,10 +77,6 @@
               "target": "Package",
               "version": "[18.2.0.57, )"
             },
-            "Syncfusion.Licensing": {
-              "target": "Package",
-              "version": "[19.1.0.66, )"
-            },
             "System.Net.Http.Json": {
               "target": "Package",
               "version": "[5.0.0, )"

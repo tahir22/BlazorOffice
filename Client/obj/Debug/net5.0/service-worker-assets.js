@@ -453,7 +453,7 @@
       "url": "_content\/Syncfusion.Blazor\/styles\/material.css"
     },
     {
-      "hash": "sha256-hozRa25K3iAbxB4aiQv7caxOimDVdTWRDXhLD3jhT0Q=",
+      "hash": "sha256-NrhvInp5jvhJXnfIM\/UU2kTV\/Faz1kttPKdnp+tgI7k=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -621,7 +621,7 @@
       "url": "_framework\/Syncfusion.ExcelExport.Net.dll"
     },
     {
-      "hash": "sha256-Kwr52ItFbi5TBzDNul8VBwB02QSXv44ApqfYRbgwNUI=",
+      "hash": "sha256-e+J3gY2KkonNYdcpM06RpKYp8GIMC1rLujQUiEeBxLY=",
       "url": "_framework\/Syncfusion.Licensing.dll"
     },
     {
@@ -1321,19 +1321,19 @@
       "url": "_framework\/dotnet.5.0.4.js"
     },
     {
-      "hash": "sha256-EiHr+QOu+OWSUVRUvLof4PPHW8FrPKVSITF0nu1dKkk=",
+      "hash": "sha256-CAMN5bu7VWp6AiQQ+8woXBsTP3XdR8XzDgDo\/ig7QXk=",
       "url": "_framework\/Test.Shared.dll"
     },
     {
-      "hash": "sha256-LhIVbGiFQOv+o8TssVxPaV2vYSDbjWFxyuFPczzM+yY=",
+      "hash": "sha256-qCI4v90LCz6WtM0aKNbqESiT7\/6IfnVPBKS\/+uEl4kU=",
       "url": "_framework\/Test.Shared.pdb"
     },
     {
-      "hash": "sha256-YkyS6nAwYdDSQBCdXeWpNErEDq+Ryh+oec80fYmYHsw=",
+      "hash": "sha256-UshKE5yLdDx8qKwSv0Tzx\/JTkhI3K5CqSHXCdbV6n+o=",
       "url": "_framework\/Test.Client.dll"
     },
     {
-      "hash": "sha256-2DTkTYgJCPNS2eQQNtArlNvCjeTIBssQmfmJRNf0dEE=",
+      "hash": "sha256-5bh8lmvz1i6ju89fDoA6vceVrHME63iP2Ggw4QZheR8=",
       "url": "_framework\/Test.Client.pdb"
     },
     {
@@ -1505,7 +1505,7 @@
       "url": "_framework\/Syncfusion.ExcelExport.Net.dll.gz"
     },
     {
-      "hash": "sha256-zZTWv2N6SCXZvmGgnJAfqPE1Y8rVk6ka0nkVcMo2rQY=",
+      "hash": "sha256-ECz5cEMfq1286ZJWU1a8UVSy4ClMRhXQS1D1t3gXhZo=",
       "url": "_framework\/Syncfusion.Licensing.dll.gz"
     },
     {
@@ -2205,7 +2205,7 @@
       "url": "_framework\/dotnet.5.0.4.js.gz"
     },
     {
-      "hash": "sha256-P59Ssy\/MAaJgQ7UfNrWAlJnOo4QWx0RC2PsF3YabwHU=",
+      "hash": "sha256-wHX6ByCU6nuc5SOcxB5WdIWjwB78wiDwihxtp3HXFmA=",
       "url": "_framework\/Test.Shared.dll.gz"
     },
     {
@@ -10153,6 +10153,10 @@
       "url": "css\/open-iconic\/README.md"
     },
     {
+      "hash": "sha256-FTECAkqb+BSgSkR5dacNk\/rA5pWiW9+TaiCbHYOofXU=",
+      "url": "css\/sfToast.css"
+    },
+    {
       "hash": "sha256-Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=",
       "url": "favicon.ico"
     },
@@ -10161,7 +10165,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-w5X3VxyM\/1Z3wC51Ulgoe5oQ5MvvKiJuH+Uj7j8HY9c=",
+      "hash": "sha256-eK4lqv5vd+Vu8K\/L\/67ju0VTP5YspHOitngdKZa5NOM=",
       "url": "index.html"
     },
     {
@@ -10177,5 +10181,5 @@
       "url": "Test.Client.bundle.scp.css"
     }
   ],
-  "version": "7e+qZIiB"
+  "version": "X7iHhDvW"
 };

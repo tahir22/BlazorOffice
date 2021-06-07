@@ -138,6 +138,13 @@ using Syncfusion.Blazor.Calendars;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 20 "C:\Users\BA Tech\source\repos\Test\Client\_Imports.razor"
+using Syncfusion.Blazor.Notifications;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998

@@ -139,6 +139,13 @@ using Syncfusion.Blazor.Calendars;
 #line hidden
 #nullable disable
 #nullable restore
+#line 20 "C:\Users\BA Tech\source\repos\Test\Client\_Imports.razor"
+using Syncfusion.Blazor.Notifications;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\BA Tech\source\repos\Test\Client\Pages\FetchData.razor"
 using Test.Shared;
 

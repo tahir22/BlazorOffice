@@ -139,6 +139,13 @@ using Syncfusion.Blazor.Calendars;
 #line hidden
 #nullable disable
 #nullable restore
+#line 20 "C:\Users\BA Tech\source\repos\Test\Client\_Imports.razor"
+using Syncfusion.Blazor.Notifications;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\BA Tech\source\repos\Test\Client\Pages\CustomerF\Addcustomer.razor"
 using Test.Shared;
 
@@ -154,8 +161,24 @@ using Test.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 327 "C:\Users\BA Tech\source\repos\Test\Client\Pages\CustomerF\Addcustomer.razor"
+#line 341 "C:\Users\BA Tech\source\repos\Test\Client\Pages\CustomerF\Addcustomer.razor"
        
+
+
+    #region Toast
+    SfToast ToastObj;
+    string toastMessage;
+    ToastModel Toast;
+    #endregion
+
+
+
+
+
+
+
+
+
     string message { get; set; }
 
     private bool ConfirmDlgVisible { get; set; } = false;
@@ -163,26 +186,27 @@ using Test.Shared;
     bool showAddUser = false;
     bool editUser = false;
     string content;
-    private string UserToBeDeletedId;
+    private int UserToBeDeletedId;
+
 
     CustomerModel User = new CustomerModel();
-    public List<CustomerinformationModel> ComplaintsList { get; set; }
 
-    public List<SelectListItem> vehiclesList { get; set; } = new List<SelectListItem>();
+    public List<CustomerinformationModel>
+    ComplaintsList { get; set; }
 
+    public List<SelectListItem>
+        vehiclesList { get; set; } = new List<SelectListItem>
+            ();
 
-
-    public List<CustomerModel> AccidentsList { get; set; }
-
-
-
-
-
+    public List<CustomerModel>
+        AccidentsList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>  ("WeatherForecast");
         AccidentsList = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x => x.Id).ToList();
+        DropdownListData();
         //.OrderByDescending(x => x.LastUpdated)
     }
 
@@ -202,6 +226,7 @@ using Test.Shared;
         // vehiclesList = ComplaintsList.GroupBy(x => x.VehicleNumber).Select(x => new SelectListItem() { Text = x.Key, Value = x.Key }).ToList();
 
         vehiclesList = ComplaintsList.Select(x => new SelectListItem() { Text = x.City, Value = x.CusInfoId.ToString() }).ToList();
+
     }
 
 
@@ -214,9 +239,15 @@ using Test.Shared;
             var result = await Http.PostAsJsonAsync("api/Values/AddCustomer", User);
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                this.message = "Data save successfully";
 
-                await JSRuntime.InvokeVoidAsync("toastfun");
+
+                //await JSRuntime.InvokeVoidAsync("toastfun");
+                toastMessage = "Data save successfully";
+                Toast = new ToastModel { Title = "Congratulations ", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                //Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                await this.ToastObj.Show(Toast);
+
+
 
                 await ListofCustomers();
                 User = new CustomerModel();
@@ -224,10 +255,20 @@ using Test.Shared;
                 //UserList = await GetUsers();
                 //showAddUserModal();
             }
+            else
+            {
+                toastMessage = "Data not save successfully";
+                Toast = new ToastModel { Title = "Error", Content = toastMessage, CssClass = "e-toast-danger", Icon = "e-error toast-icons" };
+                await this.ToastObj.Show(Toast);
+
+            }
         }
         catch (Exception)
         {
-            this.message = "Data not save successfully";
+            //this.message = "Data not2 save successfully";
+            toastMessage = "Data not save successfully";
+            Toast = new ToastModel { Title = "Error", Content = toastMessage, CssClass = "e-toast-danger", Icon = "e-error toast-icons" };
+            await this.ToastObj.Show(Toast);
         }
 
     }
@@ -250,12 +291,18 @@ using Test.Shared;
                 //UserList = await GetUsers();
                 //await ListofCustomers();
                 //User = new CustomerModel();
-                this.message = "Data Updated successfully";
+                //this.message = "Data Updated successfully";
+                toastMessage = "Data Updated successfully";
+                Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                await this.ToastObj.Show(Toast);
             }
         }
         catch (Exception)
         {
-            this.message = "Data not Updated successfully";
+            //this.message = "Data not Updated successfully";
+            toastMessage = "Data not Updated successfully";
+            Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+            await this.ToastObj.Show(Toast);
         }
     }
 
@@ -274,7 +321,7 @@ using Test.Shared;
     {
 
 
-        DropdownListData();
+
 
 
         if (editUser)
@@ -283,11 +330,14 @@ using Test.Shared;
         }
         else
         {
+
             content = "Add User";
         }
 
         User = new CustomerModel();
+
         showAddUser = !showAddUser;
+
     }
 
 
@@ -296,34 +346,56 @@ using Test.Shared;
 
 
 
-    //public void ConfirmBtn(string id, string name)
-    //{
-    //    UserToBeDeletedId = id;
-    //    content = "Are you sure you want to permanently delete \"" + name + "\" ?";
+    public void ConfirmBtn(int id, string name)
+    {
+        UserToBeDeletedId = id;
+        content = "Are you sure you want to permanently delete \"" + name + "\" ?";
 
-    //    this.ConfirmDlgVisible = true;
-    //}
-    //public void HideDialog(Object e)
-    //{
-    //    this.ConfirmDlgVisible = false;
-    //}
+        this.ConfirmDlgVisible = true;
+    }
+    public void HideDialog(Object e)
+    {
+        this.ConfirmDlgVisible = false;
+    }
 
-    //async Task DeleteUser()
-    //{
-    //    //try
-    //    //{
-    //    //    UserList.Clear();
-    //    //    apiRequest = new ApiRequest() { Id = new Guid(UserToBeDeletedId) };
-    //    //    this.ConfirmDlgVisible = false;
-    //    //    await Http.PostAsJsonAsync("api/auth/DeleteUser", apiRequest);
-    //    //}
-    //    //catch (Exception ex)
-    //    //{
-    //    //    throw;
-    //    //}
-    //    //UserList = await GetUsers();
-    //    //refreshObjects();
-    //}
+    async Task DeleteUser()
+    {
+        try
+        {
+            int id = UserToBeDeletedId;
+            apiRequest apiRequestt = new apiRequest() { Id = Convert.ToInt32( UserToBeDeletedId) };
+            this.ConfirmDlgVisible = false;
+
+            var result = await Http.PostAsJsonAsync("api/Values/DeleteUser", apiRequestt);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                toastMessage = "Data Delete successfully";
+                Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                await this.ToastObj.Show(Toast);
+                // await Http.PostAsJsonAsync("api/Values/DeleteUser", id);
+            }
+            else
+            {
+
+                toastMessage = "Data not Delete successfully";
+                Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                await this.ToastObj.Show(Toast);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            toastMessage = "Data not Delete successfully";
+            Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+            await this.ToastObj.Show(Toast);
+            throw;
+        }
+        User =  new CustomerModel();
+
+        await ListofCustomers();
+        //refreshObjects();
+    }
 
 
 

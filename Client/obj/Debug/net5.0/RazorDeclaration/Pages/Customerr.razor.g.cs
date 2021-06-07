@@ -90,13 +90,6 @@ using Syncfusion.Blazor.Inputs;
 #line hidden
 #nullable disable
 #nullable restore
-#line 13 "C:\Users\BA Tech\source\repos\Test\Client\_Imports.razor"
-using Syncfusion.Blazor.Grids;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 14 "C:\Users\BA Tech\source\repos\Test\Client\_Imports.razor"
 using Syncfusion.Blazor.Spinner;
 
@@ -139,8 +132,22 @@ using Syncfusion.Blazor.Calendars;
 #line hidden
 #nullable disable
 #nullable restore
+#line 20 "C:\Users\BA Tech\source\repos\Test\Client\_Imports.razor"
+using Syncfusion.Blazor.Notifications;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\BA Tech\source\repos\Test\Client\Pages\Customerr.razor"
 using Test.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 9 "C:\Users\BA Tech\source\repos\Test\Client\Pages\Customerr.razor"
+using Syncfusion.Blazor.Grids;
 
 #line default
 #line hidden
@@ -154,29 +161,171 @@ using Test.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 74 "C:\Users\BA Tech\source\repos\Test\Client\Pages\Customerr.razor"
-               
+#line 138 "C:\Users\BA Tech\source\repos\Test\Client\Pages\Customerr.razor"
+       
+    #region Toast
+    SfToast ToastObj;
+    string toastMessage;
+    ToastModel Toast;
+    #endregion
+
+    private int UserToBeDeletedId;
+    CustomerModel User = new CustomerModel();
+    public List<CustomerModel> Orders { get; set; }
+    private async Task OnBeginHandler(ActionEventArgs<CustomerModel> Args)
+    {
+        if (Args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            if (Args.Action == "Add")
+            {
+
+                User = Args.Data; //returns the edited / insrted record details.
+                                  //insert into your db
+
+
+
+                var result = await Http.PostAsJsonAsync("api/Values/AddCustomer", User);
+                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    toastMessage = "Data save successfully";
+                    Toast = new ToastModel { Title = "Congratulations ", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                    //Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                    await CallGetAllCustomer();
+                    await this.ToastObj.Show(Toast);
+
+
+                    //await JSRuntime.InvokeVoidAsync("toastfun");
+
+                    User = new CustomerModel();
+
+                }
+                else
+                {
+
+                    toastMessage = "Data not save successfully";
+                    Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                    await this.ToastObj.Show(Toast);
+                }
+            }
+            else
+            {
+
+
+                var result = await Http.PostAsJsonAsync("api/Values/UpdateCustomerAsync", User);
+                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    toastMessage = "Data Updated successfully";
+                    Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                    await this.ToastObj.Show(Toast);
+                }
+                else
+                {
+
+                    toastMessage = "Data not Updated successfully";
+                    Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                    await CallGetAllCustomer();
+                    await this.ToastObj.Show(Toast);
+                }
+                //update data into your db
+            }
+        }
+
+        if (Args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+
+
+            //if (Args.Action == "Delete")
+            //{
+
+
+
+            int id = Args.Data.Id;
+            apiRequest apiRequestt = new apiRequest() { Id = id };
+
+            var result = await Http.PostAsJsonAsync("api/Values/DeleteUser", apiRequestt);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                toastMessage = "Data Delete successfully";
+                Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                await CallGetAllCustomer();
+                await this.ToastObj.Show(Toast);
+
+                // await Http.PostAsJsonAsync("api/Values/DeleteUser", id);
+            }
+            else
+            {
+
+                toastMessage = "Data not Delete successfully";
+                Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                await this.ToastObj.Show(Toast);
+            }
+
+
+
+
+
+        }
+    }
+
+
+
+
+
+    public string[] ToolbarItems = new string[] { "ExcelExport", "CsvExport", "PdfExport", "Search", "Add", "Edit", "Delete", "Update", "Cancel" };
+
+    public IEditorSettings FreightEditParams = new NumericEditCellParams
+    {
+        Params = new NumericTextBoxModel<object>() { ShowClearButton = true, ShowSpinButton = false }
+    };
+
 
 
     public List<CustomerModel> AccidentsList { get; set; }
 
+    public List<CustomerModel> TreeData { get; set; }
+    SfGrid<CustomerModel> DailyGrid;
 
+    public async Task CallGetAllCustomer()
+    {
+        AccidentsList = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x => x.Id).ToList();
+        Orders = AccidentsList;
 
+    }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await CallGetAllCustomer();
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
+        //TreeData = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x => x.Id).ToList();
 
-        protected override async Task OnInitializedAsync()
+        //.OrderByDescending(x => x.LastUpdated)
+    }
+    public void DailyToolbarClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "DailyGrid_pdfexport")
         {
-            //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-            AccidentsList = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x=>x.Id).ToList();
-            //.OrderByDescending(x => x.LastUpdated)
+            PdfExportProperties Props = new PdfExportProperties();
+            Props.PageOrientation = PageOrientation.Landscape;
+            Props.PageSize = PdfPageSize.A4;
+            this.DailyGrid.PdfExport(Props);
         }
-
-        
+        if (args.Item.Id == "DailyGrid_excelexport")
+        {
+            this.DailyGrid.ExcelExport();
+        }
+        if (args.Item.Id == "DailyGrid_csvexport")
+        {
+            this.DailyGrid.CsvExport();
+        }
+    }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JSRuntime { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient Http { get; set; }
     }
 }

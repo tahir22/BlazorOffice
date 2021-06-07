@@ -1662,7 +1662,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Syncfusion.Blazor" Version="18.2.0.57" />
-    <PackageReference Include="Syncfusion.Licensing" Version="19.1.0.66" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Test.Server.Models;
+using Test.Shared;
 
 namespace Test.Server.Controllers
 {
@@ -51,7 +52,7 @@ namespace Test.Server.Controllers
 
 
         [HttpPost("AddCustomer")]
-        public async Task<IActionResult> AddCustomer(Customer cus)
+        public async Task<IActionResult> AddCustomer(Customer cus   )
         {
             try
             {
@@ -106,6 +107,24 @@ namespace Test.Server.Controllers
         }
 
         
+        [HttpPost("DeleteUser")]
+        
+        public async Task<IActionResult> DeleteUser(apiRequest apiId)
+        {
+            try
+            {
+               var deleteCustomer=dbContext.Customers.Find(apiId.Id);
+                 dbContext.Remove(deleteCustomer);
+                await dbContext.SaveChangesAsync();
+                
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
 
     }
 }

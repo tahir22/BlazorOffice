@@ -48,7 +48,7 @@
       "Newtonsoft.Json.dll": "sha256-BPeXAMTZKR8pJ7LpQA8+w4soJFGV1TLt2PPpnmpBUeE=",
       "Syncfusion.Blazor.dll": "sha256-ftjG5ILPXh096H\/rNadB2onFfWne7DABc2Uh\/ad+eWY=",
       "Syncfusion.ExcelExport.Net.dll": "sha256-Fdc\/QqNSWJQx3cPxKSFwBJIICzQ3c\/jb21FbPIgMUXA=",
-      "Syncfusion.Licensing.dll": "sha256-Kwr52ItFbi5TBzDNul8VBwB02QSXv44ApqfYRbgwNUI=",
+      "Syncfusion.Licensing.dll": "sha256-e+J3gY2KkonNYdcpM06RpKYp8GIMC1rLujQUiEeBxLY=",
       "Syncfusion.PdfExport.Net.dll": "sha256-PiBUQqe54Gm4LQ5lyVR49pSh2y+QjdtotupHWpUoCws=",
       "System.IO.Pipelines.dll": "sha256-3ET+mpR7F058YRj9YaLHOVXBqOW6iUxtIpeiKPYw4PA=",
       "Microsoft.CSharp.dll": "sha256-7w8yLgolT9mK58A8DN4p3fA1wWdGB+8RS++q3tPXs70=",
@@ -216,13 +216,13 @@
       "mscorlib.dll": "sha256-Fi+LybwHL\/VGD\/09OxxtYlT6exn9xVU+LdojZ9juR2c=",
       "netstandard.dll": "sha256-P8xX0ad1hKyWWbBxiXl3cYokFlDiuXwp3pqoYatH0kk=",
       "System.Private.CoreLib.dll": "sha256-2km83sNUTrumGJYdDzsN8RnJqv00vKWLCCh0UGajTB4=",
-      "Test.Shared.dll": "sha256-EiHr+QOu+OWSUVRUvLof4PPHW8FrPKVSITF0nu1dKkk=",
-      "Test.Client.dll": "sha256-YkyS6nAwYdDSQBCdXeWpNErEDq+Ryh+oec80fYmYHsw="
+      "Test.Shared.dll": "sha256-CAMN5bu7VWp6AiQQ+8woXBsTP3XdR8XzDgDo\/ig7QXk=",
+      "Test.Client.dll": "sha256-UshKE5yLdDx8qKwSv0Tzx\/JTkhI3K5CqSHXCdbV6n+o="
     },
     "lazyAssembly": null,
     "pdb": {
-      "Test.Shared.pdb": "sha256-LhIVbGiFQOv+o8TssVxPaV2vYSDbjWFxyuFPczzM+yY=",
-      "Test.Client.pdb": "sha256-2DTkTYgJCPNS2eQQNtArlNvCjeTIBssQmfmJRNf0dEE="
+      "Test.Shared.pdb": "sha256-qCI4v90LCz6WtM0aKNbqESiT7\/6IfnVPBKS\/+uEl4kU=",
+      "Test.Client.pdb": "sha256-5bh8lmvz1i6ju89fDoA6vceVrHME63iP2Ggw4QZheR8="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-ibxaSjW7s3aLVssChknhzCpgMTHGu4D48Q9OLP3dfe8=",
