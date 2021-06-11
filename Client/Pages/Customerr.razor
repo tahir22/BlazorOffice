@@ -74,7 +74,7 @@ else
 
     /////////////////////////////////////////
 
-    @*<table class="table table-bordered border-primary table-responsive-sm">
+    <table class="table table-bordered border-primary table-responsive-sm">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -87,14 +87,14 @@ else
                 @foreach (var forecast in AccidentsList)
                 {
                     <tr>
-                        <td>@forecast.Id         </td>
-                        <td>@forecast.Name       </td>
-                        <td>@forecast.Email     </td>
-                        <td>@forecast.MobileNo  </td>
+                        <td  >@forecast.Id         </td>
+                        <td data-toggle="tooltip" title="@forecast.Name">@forecast.Name       </td>
+                        <td data-toggle="tooltip" title="@forecast.Email">@forecast.Email     </td>
+                        <td data-toggle="tooltip" title="@forecast.MobileNo">@forecast.MobileNo  </td>
                     </tr>
                 }
             </tbody>
-        </table>*@
+        </table>
 
 
 
@@ -168,6 +168,7 @@ else
 
 
                     //await JSRuntime.InvokeVoidAsync("toastfun");
+
 
                     User = new CustomerModel();
 
@@ -269,6 +270,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await CallGetAllCustomer();
+
+        await JSRuntime.InvokeVoidAsync("tooltipfun");
         //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
         //TreeData = (await Http.GetFromJsonAsync<List<CustomerModel>>("api/Values/GetAllCustomer")).OrderByDescending(x => x.Id).ToList();

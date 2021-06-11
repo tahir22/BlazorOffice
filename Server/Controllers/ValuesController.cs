@@ -125,6 +125,41 @@ namespace Test.Server.Controllers
             }
 
         }
+        [HttpPost]
+        public IActionResult IsAlreadySigned(string UserEmailId)
+        {
+            
 
+            return Json(IsUserAvailable(UserEmailId));
+        }
+
+        private IActionResult Json(bool v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsUserAvailable(string EmailId)
+        {
+            // Assume these details coming from database  
+          
+            var RegEmailId = (from u in dbContext.Customers
+                              where u.Name.ToUpper() == EmailId.ToUpper()
+                              select new { EmailId }).FirstOrDefault();
+
+            bool status;
+            if (RegEmailId != null)
+            {
+                //Already registered  
+                status = false;
+            }
+            else
+            {
+                //Available to use  
+                status = true;
+            }
+
+
+            return status;
+        }
     }
 }
