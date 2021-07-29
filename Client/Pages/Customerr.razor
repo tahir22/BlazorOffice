@@ -4,7 +4,7 @@
 @*<h3>Customerr</h3>*@
 @inject IJSRuntime JSRuntime
 
-@inject NavigationManager NavigationManager;
+ 
 
 @using Syncfusion.Blazor.Grids
 
@@ -162,7 +162,7 @@ else
                 {
                     toastMessage = "Data save successfully";
                     Toast = new ToastModel { Title = "Congratulations ", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
-                    //Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
+                    Toast = new ToastModel { Title = "New Menu Item", Content = toastMessage, CssClass = "e-toast-success", Icon = "e-success toast-icons" };
                     await CallGetAllCustomer();
                     await this.ToastObj.Show(Toast);
 

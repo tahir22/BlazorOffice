@@ -138,13 +138,14 @@ namespace Test.Server.Controllers
             throw new NotImplementedException();
         }
 
-        public bool IsUserAvailable(string EmailId)
+        [AcceptVerbs("Get", "Post")]
+        public bool IsUserAvailable(string name)
         {
             // Assume these details coming from database  
           
             var RegEmailId = (from u in dbContext.Customers
-                              where u.Name.ToUpper() == EmailId.ToUpper()
-                              select new { EmailId }).FirstOrDefault();
+                              where u.Name.ToUpper() == name.ToUpper()
+                              select new { name }).FirstOrDefault();
 
             bool status;
             if (RegEmailId != null)
@@ -157,6 +158,18 @@ namespace Test.Server.Controllers
                 //Available to use  
                 status = true;
             }
+
+
+            return status;
+        }
+        public bool IsUserAvailableemail(string email)
+        {
+            // Assume these details coming from database  
+
+            
+
+            bool status=true;
+             
 
 
             return status;
